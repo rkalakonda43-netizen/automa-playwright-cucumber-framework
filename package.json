@@ -1,0 +1,15 @@
+{
+  "name": "automa-playwright-cucumber-framework",
+  "version": "1.0.0",
+  "description": "Playwright + Cucumber + POM regression framework for AutomationExercise",
+  "scripts": {
+    "test": "node scripts/run-cucumber.js headed",
+    "test:headed": "node scripts/run-cucumber.js headed",
+    "test:debug": "node scripts/run-cucumber.js debug"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.8.0",
+    "@playwright/test": "^1.52.0",
+    "playwright": "^1.52.0"
+  }
+}

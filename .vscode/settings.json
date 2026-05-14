@@ -1,0 +1,19 @@
+{
+  "cucumber.features": [
+    "src/features/**/*.feature",
+    "**/src/features/**/*.feature"
+  ],
+  "cucumber.glue": [
+    "src/steps/**/*.js",
+    "src/support/**/*.js",
+    "**/src/steps/**/*.js",
+    "**/src/support/**/*.js"
+  ],
+  "cucumberautocomplete.syncfeatures": "src/features/**/*.feature",
+  "cucumberautocomplete.steps": [
+    "src/steps/**/*.js",
+    "src/support/**/*.js",
+    "**/src/steps/**/*.js",
+    "**/src/support/**/*.js"
+  ]
+}

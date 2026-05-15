@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 
 const mode = process.argv[2] || 'headless';
+const extraArgs = process.argv.slice(3);
 
 const env = {
     ...process.env,
@@ -18,9 +19,10 @@ const cucumberArgs = [
     '--require',
     'src/support/*.js',
     'src/features/*.feature',
+    ...extraArgs,
 ];
 
-console.log(`Running Cucumber in ${mode} mode`);
+console.log(`Running Cucumber in ${mode} mode${extraArgs.length ? ` with args: ${extraArgs.join(' ')}` : ''}`);
 
 const child = spawn('npx', cucumberArgs, {
     env,

@@ -5,7 +5,10 @@
   "scripts": {
     "test": "node scripts/run-cucumber.js headed",
     "test:headed": "node scripts/run-cucumber.js headed",
-    "test:debug": "node scripts/run-cucumber.js debug"
+    "test:debug": "node scripts/run-cucumber.js debug",
+    "test:smoke": "node scripts/run-cucumber.js headed --tags @smoke",
+    "test:regression": "node scripts/run-cucumber.js headed --tags @regression",
+    "test:checkout": "node scripts/run-cucumber.js headed --tags @checkout"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.8.0",

@@ -1,87 +1,81 @@
-const { dismissCookiePopup } = require('../support/cookieConsent');
+const BasePage = require('./BasePage');
 
-class LoginPage {
+class LoginPage extends BasePage {
     constructor(page) {
-        this.page = page;
-        this.nameInput = 'input[data-qa="signup-name"]';
-        this.emailInput = 'input[data-qa="signup-email"]';
-        this.signupBtn = 'button[data-qa="signup-button"]';
-
-        this.loginEmail = 'input[data-qa="login-email"]';
-        this.loginPassword = 'input[data-qa="login-password"]';
-        this.loginBtn = 'button[data-qa="login-button"]';
-
-        this.genderTitle = '#id_gender1';
-        this.password = 'input[data-qa="password"]';
-        this.day = 'select[data-qa="days"]';
-        this.month = 'select[data-qa="months"]';
-        this.year = 'select[data-qa="years"]';
-        this.newsletter = '#newsletter';
-        this.specialOffers = '#optin';
-        this.firstName = 'input[data-qa="first_name"]';
-        this.lastName = 'input[data-qa="last_name"]';
-        this.company = 'input[data-qa="company"]';
-        this.address = 'input[data-qa="address"]';
-        this.address2 = 'input[data-qa="address2"]';
-        this.country = 'select[data-qa="country"]';
-        this.state = 'input[data-qa="state"]';
-        this.city = 'input[data-qa="city"]';
-        this.zipcode = 'input[data-qa="zipcode"]';
-        this.mobileNumber = 'input[data-qa="mobile_number"]';
-        this.accountInformationTitle = 'text=Enter Account Information';
-        this.createAccountBtn = 'button[data-qa="create-account"]';
-        this.accountCreatedTitle = '[data-qa="account-created"]';
-        this.continueBtn = 'a[data-qa="continue-button"]';
-        this.logoutLink = 'a[href="/logout"]';
+        super(page);
+        this.locators = {
+            signupNameInput: 'input[data-qa="signup-name"]',
+            signupEmailInput: 'input[data-qa="signup-email"]',
+            signupButton: 'button[data-qa="signup-button"]',
+            loginEmailInput: 'input[data-qa="login-email"]',
+            loginPasswordInput: 'input[data-qa="login-password"]',
+            loginButton: 'button[data-qa="login-button"]',
+            genderTitle: '#id_gender1',
+            passwordInput: 'input[data-qa="password"]',
+            daySelect: 'select[data-qa="days"]',
+            monthSelect: 'select[data-qa="months"]',
+            yearSelect: 'select[data-qa="years"]',
+            newsletterCheckbox: '#newsletter',
+            specialOffersCheckbox: '#optin',
+            firstNameInput: 'input[data-qa="first_name"]',
+            lastNameInput: 'input[data-qa="last_name"]',
+            companyInput: 'input[data-qa="company"]',
+            addressInput: 'input[data-qa="address"]',
+            address2Input: 'input[data-qa="address2"]',
+            countrySelect: 'select[data-qa="country"]',
+            stateInput: 'input[data-qa="state"]',
+            cityInput: 'input[data-qa="city"]',
+            zipcodeInput: 'input[data-qa="zipcode"]',
+            mobileNumberInput: 'input[data-qa="mobile_number"]',
+            accountInformationTitle: 'text=Enter Account Information',
+            createAccountButton: 'button[data-qa="create-account"]',
+            accountCreatedTitle: '[data-qa="account-created"]',
+            continueButton: 'a[data-qa="continue-button"]',
+            logoutLink: 'a[href="/logout"]',
+        };
     }
 
     async signup(name, email) {
-        await this.page.fill(this.nameInput, name);
-        await this.page.fill(this.emailInput, email);
-        await this.dismissConsentOverlay();
-        await this.page.click(this.signupBtn);
+        await this.fill(this.locators.signupNameInput, name);
+        await this.fill(this.locators.signupEmailInput, email);
+        await this.click(this.locators.signupButton);
     }
 
     async isSignupPageDisplayed() {
-        return (await this.isVisible(this.accountInformationTitle))
-            && (await this.isVisible(this.createAccountBtn));
+        return (await this.isVisible(this.locators.accountInformationTitle))
+            && (await this.isVisible(this.locators.createAccountButton));
     }
 
     async login(email, password) {
-        await this.page.fill(this.loginEmail, email);
-        await this.page.fill(this.loginPassword, password);
-        await this.dismissConsentOverlay();
-        await this.page.click(this.loginBtn);
+        await this.fill(this.locators.loginEmailInput, email);
+        await this.fill(this.locators.loginPasswordInput, password);
+        await this.click(this.locators.loginButton);
     }
 
     async completeAccountRegistration(user) {
-        await this.page.check(this.genderTitle);
-        await this.page.fill(this.password, user.password);
-        await this.page.selectOption(this.day, user.day);
-        await this.page.selectOption(this.month, user.month);
-        await this.page.selectOption(this.year, user.year);
-        await this.page.check(this.newsletter);
-        await this.page.check(this.specialOffers);
-        await this.page.fill(this.firstName, user.firstName);
-        await this.page.fill(this.lastName, user.lastName);
-        await this.page.fill(this.company, user.company);
-        await this.page.fill(this.address, user.address);
-        await this.page.fill(this.address2, user.address2);
-        await this.page.selectOption(this.country, user.country);
-        await this.page.fill(this.state, user.state);
-        await this.page.fill(this.city, user.city);
-        await this.page.fill(this.zipcode, user.zipcode);
-        await this.page.fill(this.mobileNumber, user.mobileNumber);
-        await this.dismissConsentOverlay();
-        await this.page.click(this.createAccountBtn);
-        await this.page.locator(this.accountCreatedTitle).waitFor({ state: 'visible', timeout: 20000 });
+        await this.check(this.locators.genderTitle);
+        await this.fill(this.locators.passwordInput, user.password);
+        await this.selectOption(this.locators.daySelect, user.day);
+        await this.selectOption(this.locators.monthSelect, user.month);
+        await this.selectOption(this.locators.yearSelect, user.year);
+        await this.check(this.locators.newsletterCheckbox);
+        await this.check(this.locators.specialOffersCheckbox);
+        await this.fill(this.locators.firstNameInput, user.firstName);
+        await this.fill(this.locators.lastNameInput, user.lastName);
+        await this.fill(this.locators.companyInput, user.company);
+        await this.fill(this.locators.addressInput, user.address);
+        await this.fill(this.locators.address2Input, user.address2);
+        await this.selectOption(this.locators.countrySelect, user.country);
+        await this.fill(this.locators.stateInput, user.state);
+        await this.fill(this.locators.cityInput, user.city);
+        await this.fill(this.locators.zipcodeInput, user.zipcode);
+        await this.fill(this.locators.mobileNumberInput, user.mobileNumber);
+        await this.click(this.locators.createAccountButton);
+        await this.page.locator(this.locators.accountCreatedTitle).waitFor({ state: 'visible', timeout: 20000 });
     }
 
     async getAccountCreatedText() {
-        const locator = this.page.locator(this.accountCreatedTitle);
-        await locator.waitFor({ state: 'visible', timeout: 20000 });
-
-        return (await locator.innerText()).trim();
+        return this.getText(this.locators.accountCreatedTitle, 20000);
     }
 
     async isAccountCreated(message = 'Account Created!') {
@@ -89,8 +83,7 @@ class LoginPage {
     }
 
     async continueAfterAccountCreated() {
-        await this.dismissConsentOverlay();
-        await this.page.click(this.continueBtn);
+        await this.click(this.locators.continueButton);
         await this.page.waitForLoadState('domcontentloaded');
         await this.dismissConsentOverlay();
     }
@@ -100,29 +93,13 @@ class LoginPage {
     }
 
     async isLogoutButtonVisible() {
-        return this.isVisible(this.logoutLink);
+        return this.isVisible(this.locators.logoutLink);
     }
 
     async logout() {
-        await this.dismissConsentOverlay();
-        await this.page.click(this.logoutLink);
+        await this.click(this.locators.logoutLink);
         await this.page.waitForLoadState('domcontentloaded');
         await this.dismissConsentOverlay();
-    }
-
-    async isVisible(selector) {
-        const locator = this.page.locator(selector);
-
-        try {
-            await locator.waitFor({ state: 'visible', timeout: 10000 });
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async dismissConsentOverlay() {
-        await dismissCookiePopup(this.page);
     }
 }
 

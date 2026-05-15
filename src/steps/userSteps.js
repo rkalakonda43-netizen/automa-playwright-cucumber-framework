@@ -4,6 +4,7 @@ const assert = require('assert');
 const HomePage = require('../pages/HomePage');
 const LoginPage = require('../pages/LoginPage');
 const ProductPage = require('../pages/ProductPage');
+const CheckoutPage = require('../pages/CheckoutPage');
 
 function buildSignupUser() {
     return {
@@ -46,6 +47,10 @@ function assertTextMatches(actual, expected) {
 
 Given('user launches the application', async function () {
     this.homePage = new HomePage(this.page);
+    this.loginPage = new LoginPage(this.page);
+    this.productPage = new ProductPage(this.page);
+    this.checkoutPage = new CheckoutPage(this.page);
+
     await this.homePage.navigate();
 });
 
@@ -54,7 +59,6 @@ When(/^user clicks on Signup\/Login button$/, async function () {
 });
 
 When('user enters signup details', async function () {
-    this.loginPage = new LoginPage(this.page);
     this.signupUser = buildSignupUser();
 
     await this.loginPage.signup(this.signupUser.name, this.signupUser.email);
@@ -73,7 +77,6 @@ Then('User should see {string}', async function (message) {
 });
 
 When('user has a registered account', async function () {
-    this.loginPage = new LoginPage(this.page);
     this.signupUser = buildSignupUser();
 
     await this.loginPage.signup(this.signupUser.name, this.signupUser.email);
@@ -84,7 +87,6 @@ When('user has a registered account', async function () {
 });
 
 When('user logs in with valid credentials', async function () {
-    this.loginPage = new LoginPage(this.page);
     await this.loginPage.login(this.signupUser.email, this.signupUser.password);
 });
 
@@ -97,8 +99,6 @@ Then('user can see Logout button', async function () {
 });
 
 When('user searches for a product {string}', async function (productName) {
-    this.productPage = new ProductPage(this.page);
-
     await this.homePage.clickProducts();
     await this.productPage.searchForProduct(productName);
 });
@@ -117,7 +117,6 @@ When('I wait for 50 seconds', async function () {
 
 When('user adds a product to cart', async function () {
     await this.homePage.clickProducts();
-    this.productPage = new ProductPage(this.page);
     this.selectedProductName = 'Blue Top';
     await this.productPage.addFirstProductToCart();
 });
@@ -139,22 +138,22 @@ Then('user should see the product in the cart', async function () {
 });
 
 When('user clicks on proceed to checkout button', async function () {
-    await this.productPage.proceedToCheckout();
+    await this.checkoutPage.proceedToCheckout();
 });
 
 When('user clicks on place order button', async function () {
-    await this.productPage.placeOrder();
+    await this.checkoutPage.placeOrder();
 });
 
 When('User clicks on place order button', async function () {
-    await this.productPage.placeOrder();
+    await this.checkoutPage.placeOrder();
 });
 
 When('user fills in payment details', async function () {
-    await this.productPage.fillPaymentDetails(buildPaymentDetails());
+    await this.checkoutPage.fillPaymentDetails(buildPaymentDetails());
 });
 
 Then('the order should be placed successfully with message {string}', async function (expectedMessage) {
-    assertTextMatches(await this.productPage.getOrderPlacedHeadingText(), 'Order Placed!');
-    assertTextMatches(await this.productPage.getOrderConfirmedMessageText(), expectedMessage);
+    assertTextMatches(await this.checkoutPage.getOrderPlacedHeadingText(), 'Order Placed!');
+    assertTextMatches(await this.checkoutPage.getOrderConfirmedMessageText(), expectedMessage);
 });

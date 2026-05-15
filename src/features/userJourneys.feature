@@ -1,6 +1,6 @@
 Feature: Automation Exercise Critical User Journeys
 
-
+  @regression @registration @smoke
   Scenario: User Registration Journey
     Given user launches the application
     When user clicks on Signup/Login button
@@ -10,6 +10,7 @@ Feature: Automation Exercise Critical User Journeys
     Then User should see "Account Created!"
 
 
+  @regression @login @smoke
   Scenario: User Login Journey
     Given user launches the application
     When user clicks on Signup/Login button
@@ -17,7 +18,8 @@ Feature: Automation Exercise Critical User Journeys
     And user logs in with valid credentials
     Then user should be logged in
     And user can see Logout button
-    
+
+  @regression @products
   Scenario: Product Search Journey
     Given user launches the application
     When user searches for a product "Blue top"
@@ -26,6 +28,7 @@ Feature: Automation Exercise Critical User Journeys
 
 
 
+  @regression @checkout @e2e
   Scenario: Add Product to Cart and Checkout Journey
     Given user launches the application
     When user clicks on Signup/Login button

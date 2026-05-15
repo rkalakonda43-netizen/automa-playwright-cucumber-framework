@@ -1,32 +1,30 @@
-const { dismissCookiePopup } = require('../support/cookieConsent');
+const BasePage = require('./BasePage');
 
-class HomePage {
+class HomePage extends BasePage {
     constructor(page) {
-        this.page = page;
-        this.signupLoginLink = 'a[href="/login"]';
+        super(page);
+        this.url = 'https://automationexercise.com';
+        this.locators = {
+            signupLoginLink: 'a[href="/login"]',
+            productsLink: 'a[href="/products"]',
+        };
     }
 
     async navigate() {
-        await this.page.goto('https://automationexercise.com');
-        await this.dismissConsentOverlay();
+        await this.navigateTo(this.url);
     }
 
     async clickSignupLogin() {
-        await this.dismissConsentOverlay();
-        await this.page.click(this.signupLoginLink);
+        await this.click(this.locators.signupLoginLink);
     }
 
     async clickProducts() {
         await this.dismissConsentOverlay();
         await Promise.all([
             this.page.waitForURL('**/products', { timeout: 15000 }),
-            this.page.getByRole('link', { name: /products/i }).click(),
+            this.page.locator(this.locators.productsLink).click(),
         ]);
         await this.dismissConsentOverlay();
-    }
-
-    async dismissConsentOverlay() {
-        await dismissCookiePopup(this.page);
     }
 }
 

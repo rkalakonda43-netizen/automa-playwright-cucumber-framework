@@ -1,25 +1,43 @@
 Feature: Automation Exercise Critical User Journeys
 
+
   Scenario: User Registration Journey
     Given user launches the application
-    When user navigates to signup page
+    When user clicks on Signup/Login button
     And user enters signup details
     Then signup page should be displayed
     When user completes account registration
-    Then account should be created successfully
+    Then User should see "Account Created!"
+
 
   Scenario: User Login Journey
     Given user launches the application
-    When user navigates to signup page
+    When user clicks on Signup/Login button
+    And user has a registered account
     And user logs in with valid credentials
     Then user should be logged in
-
+    And user can see Logout button
+    
   Scenario: Product Search Journey
     Given user launches the application
     When user searches for a product
     Then matching products should be displayed
 
-  Scenario: Add Product To Cart Journey
+
+
+  Scenario: User checkout  Journey
     Given user launches the application
-    When user adds a product to cart
-    Then product should be added to cart
+    When user clicks on Signup/Login button
+    And user has a registered account
+    And user logs in with valid credentials
+    Then user should be logged in
+    And user adds a product to cart
+    And product should be added to cart
+    And user click on view cart button
+    And user should see the product in the cart
+    And user clicks on proceed to checkout button
+    And User clicks on place order button
+    And user fills in payment details
+    Then the order should be placed successfully
+    And wait for 50 seconds
+  

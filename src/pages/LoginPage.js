@@ -31,7 +31,7 @@ class LoginPage {
         this.createAccountBtn = 'button[data-qa="create-account"]';
         this.accountCreatedTitle = '[data-qa="account-created"]';
         this.continueBtn = 'a[data-qa="continue-button"]';
-        this.accountDeletedTitle = '[data-qa="account-deleted"]';
+        this.logoutLink = 'a[href="/logout"]';
     }
 
     async signup(name, email) {
@@ -70,12 +70,8 @@ class LoginPage {
         await this.page.click(this.createAccountBtn);
     }
 
-    async isSignupPageDisplayed() {
-        return this.isVisible('text=Enter Account Information');
-    }
-
     async isAccountCreated() {
-        return this.isVisible(this.accountCreatedTitle);
+        return this.isVisible(`${this.accountCreatedTitle}:has-text("Account Created!")`);
     }
 
     async continueAfterAccountCreated() {
@@ -89,6 +85,13 @@ class LoginPage {
         return this.isVisible(`text=Logged in as ${name}`);
     }
 
+    async logout() {
+        await this.dismissConsentOverlay();
+        await this.page.click(this.logoutLink);
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.dismissConsentOverlay();
+    }
+
     async isVisible(selector) {
         const locator = this.page.locator(selector);
 
@@ -97,21 +100,6 @@ class LoginPage {
             return true;
         } catch (error) {
             return false;
-        }
-    }
-
-    async deleteAccountIfPresent() {
-        const deleteButton = this.page.getByRole('link', { name: /delete account/i });
-
-        if (await deleteButton.isVisible({ timeout: 3000 }).catch(() => false)) {
-            await this.dismissConsentOverlay();
-            await deleteButton.click();
-
-            const accountDeleted = this.page.locator(this.accountDeletedTitle);
-            if (await accountDeleted.isVisible({ timeout: 5000 }).catch(() => false)) {
-                await this.dismissConsentOverlay();
-                await this.page.click(this.continueBtn);
-            }
         }
     }
 

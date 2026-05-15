@@ -3,6 +3,7 @@ const { dismissCookiePopup } = require('../support/cookieConsent');
 class HomePage {
     constructor(page) {
         this.page = page;
+        this.signupLoginLink = 'a[href="/login"]';
     }
 
     async navigate() {
@@ -12,17 +13,12 @@ class HomePage {
 
     async clickSignupLogin() {
         await this.dismissConsentOverlay();
-        await this.page.getByRole('link', { name: /signup \/ login/i }).click();
+        await this.page.click(this.signupLoginLink);
     }
 
     async clickProducts() {
         await this.dismissConsentOverlay();
         await this.page.getByRole('link', { name: /products/i }).click();
-    }
-
-    async clickCart() {
-        await this.dismissConsentOverlay();
-        await this.page.getByRole('link', { name: /cart/i }).click();
     }
 
     async dismissConsentOverlay() {

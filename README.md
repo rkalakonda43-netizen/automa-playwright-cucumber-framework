@@ -1,4 +1,181 @@
-# Automation Exercise Regression Framework
+---
+
+# User Journey Analysis
+
+## Six Important User Journeys Identified
+
+After reviewing the website, the following six important user journeys were identified from both business and testing perspectives.
+
+### 1. User Registration
+
+This flow allows new users to create an account in the application.
+
+**Why important:**
+
+- Main onboarding flow for new users
+- Required to access account-related features
+- Important functionality for user management
+
+### 2. User Login and Logout
+
+This flow checks whether users can log in and log out successfully.
+
+**Why important:**
+
+- Core authentication functionality
+- Frequently used by all registered users
+- Important for account access and security
+
+### 3. Product Search
+
+This flow allows users to search for products available on the website.
+
+**Why important:**
+
+- Helps users find products easily
+- Important for customer experience
+- Core shopping functionality
+
+### 4. Add Product to Cart
+
+This flow validates whether users can add products to cart successfully.
+
+**Why important:**
+
+- Main e-commerce functionality
+- Required before checkout process
+- Important regression scenario
+
+### 5. Checkout and Place Order
+
+This flow validates the complete order placement and payment process.
+
+**Why important:**
+
+- Most critical business flow
+- Directly related to revenue generation
+- End-to-end purchase validation
+
+### 6. Contact Us Form Submission
+
+This flow validates customer support form submission.
+
+**Why important:**
+
+- Helps customers contact support team
+- Validates form functionality
+- Important customer interaction flow
+
+---
+
+# Selected User Journeys for Automation
+
+Out of the above six journeys, the following four flows were selected for automation.
+
+## 1. User Registration Journey
+
+**Why selected:**
+
+- Important onboarding functionality
+- Covers form handling and validations
+- High-impact regression scenario
+
+**Automated coverage:**
+
+- Navigate to signup page
+- Enter user details
+- Complete registration
+- Verify account created message
+
+## 2. User Login Journey
+
+**Why selected:**
+
+- Core authentication functionality
+- Frequently used user flow
+- Important for application access validation
+
+**Automated coverage:**
+
+- Navigate to login page
+- Login with valid credentials
+- Verify successful login
+- Verify logout button visibility
+
+## 3. Product Search Journey
+
+**Why selected:**
+
+- Important shopping functionality
+- High user interaction flow
+- Validates search capability
+
+**Automated coverage:**
+
+- Search for product
+- Verify matching products are displayed
+
+## 4. Add Product to Cart and Checkout Journey
+
+**Why selected:**
+
+- Most important business workflow
+- Covers end-to-end purchase flow
+- High regression and business value
+
+**Automated coverage:**
+
+- Login to application
+- Add product to cart
+- Verify cart details
+- Proceed to checkout
+- Place order
+- Enter payment details
+- Verify order confirmation message
+
+---
+
+# Automated Scenarios
+
+## Scenario 1 – Register a New User Successfully
+
+**Steps:**
+
+- Launch application
+- Open Signup/Login page
+- Enter registration details
+- Complete registration
+- Verify account creation message
+
+## Scenario 2 – Login with Valid Credentials
+
+**Steps:**
+
+- Launch application
+- Open login page
+- Enter valid credentials
+- Verify successful login
+- Verify logout button
+
+## Scenario 3 – Search for a Product
+
+**Steps:**
+
+- Launch application
+- Search for a product
+- Verify matching products are displayed
+
+## Scenario 4 – Complete Checkout Successfully
+
+**Steps:**
+
+- Login to application
+- Add product to cart
+- Verify cart details
+- Proceed to checkout
+- Place order
+- Enter payment details
+- Verify order confirmation message# Automation Exercise Regression Framework
 
 Playwright + Cucumber regression framework for critical user journeys on Automation Exercise.
 

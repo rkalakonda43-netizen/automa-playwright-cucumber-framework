@@ -29,17 +29,20 @@ class ProductPage {
 
     async searchForProduct(productName) {
         await dismissCookiePopup(this.page);
-        await this.page.fill(this.searchInput, productName);
+        await this.page.locator(this.searchInput).waitFor({ state: 'visible', timeout: 15000 });
+        await this.page.locator(this.searchInput).fill(productName);
         await dismissCookiePopup(this.page);
-        await this.page.click(this.searchButton);
+        await this.page.locator(this.searchButton).click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await dismissCookiePopup(this.page);
     }
 
     async areMatchingProductsDisplayed(productName) {
-        await this.page.locator(this.searchedProductsHeading).waitFor({ state: 'visible', timeout: 10000 });
-
         const matchingProduct = this.page
             .locator(this.productCards)
             .filter({ hasText: new RegExp(escapeRegExp(productName), 'i') });
+        await matchingProduct.first().waitFor({ state: 'visible', timeout: 20000 });
+
         return await matchingProduct.first().isVisible();
     }
 

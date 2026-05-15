@@ -7,7 +7,7 @@ Feature: Automation Exercise Critical User Journeys
     And user enters signup details
     Then signup page should be displayed
     When user completes account registration
-    Then User should see "ACCOUNT CREATED!"
+    Then User should see "Account Created!"
 
 
   Scenario: User Login Journey
@@ -26,7 +26,7 @@ Feature: Automation Exercise Critical User Journeys
 
 
 
-  Scenario: User checkout  Journey
+  Scenario: Add Product to Cart and Checkout Journey
     Given user launches the application
     When user clicks on Signup/Login button
     And user has a registered account

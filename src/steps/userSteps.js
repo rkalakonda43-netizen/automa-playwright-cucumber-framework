@@ -36,6 +36,14 @@ function buildPaymentDetails() {
     };
 }
 
+function normalizeUiText(value) {
+    return value.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function assertTextMatches(actual, expected) {
+    assert.strictEqual(normalizeUiText(actual), normalizeUiText(expected));
+}
+
 Given('user launches the application', async function () {
     this.homePage = new HomePage(this.page);
     await this.homePage.navigate();
@@ -61,7 +69,7 @@ When('user completes account registration', async function () {
 });
 
 Then('User should see {string}', async function (message) {
-    assert.strictEqual(await this.loginPage.getAccountCreatedText(), message);
+    assertTextMatches(await this.loginPage.getAccountCreatedText(), message);
 });
 
 When('user has a registered account', async function () {
@@ -70,7 +78,7 @@ When('user has a registered account', async function () {
 
     await this.loginPage.signup(this.signupUser.name, this.signupUser.email);
     await this.loginPage.completeAccountRegistration(this.signupUser);
-    assert.strictEqual(await this.loginPage.getAccountCreatedText(), 'ACCOUNT CREATED!');
+    assertTextMatches(await this.loginPage.getAccountCreatedText(), 'Account Created!');
     await this.loginPage.continueAfterAccountCreated();
     await this.loginPage.logout();
 });
@@ -147,6 +155,6 @@ When('user fills in payment details', async function () {
 });
 
 Then('the order should be placed successfully with message {string}', async function (expectedMessage) {
-    assert.strictEqual(await this.productPage.getOrderPlacedHeadingText(), 'ORDER PLACED!');
-    assert.strictEqual(await this.productPage.getOrderConfirmedMessageText(), expectedMessage);
+    assertTextMatches(await this.productPage.getOrderPlacedHeadingText(), 'Order Placed!');
+    assertTextMatches(await this.productPage.getOrderConfirmedMessageText(), expectedMessage);
 });

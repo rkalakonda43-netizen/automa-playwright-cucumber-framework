@@ -18,7 +18,11 @@ class HomePage {
 
     async clickProducts() {
         await this.dismissConsentOverlay();
-        await this.page.getByRole('link', { name: /products/i }).click();
+        await Promise.all([
+            this.page.waitForURL('**/products', { timeout: 15000 }),
+            this.page.getByRole('link', { name: /products/i }).click(),
+        ]);
+        await this.dismissConsentOverlay();
     }
 
     async dismissConsentOverlay() {

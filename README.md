@@ -29,8 +29,9 @@ Validates authentication and existing user access.
 ### 3. Product Search
 Ensures users can find products quickly and efficiently.
 
-### 4. Add Product to Cart
+### 4. Add Product to Cart and Checkout Flow
 Core e-commerce workflow directly linked to conversions and revenue.
+The automated scenario continues through checkout and order confirmation because it gives stronger regression coverage of the buying path.
 
 ## Framework Structure
 

@@ -28,6 +28,7 @@ class LoginPage {
         this.city = 'input[data-qa="city"]';
         this.zipcode = 'input[data-qa="zipcode"]';
         this.mobileNumber = 'input[data-qa="mobile_number"]';
+        this.accountInformationTitle = 'text=Enter Account Information';
         this.createAccountBtn = 'button[data-qa="create-account"]';
         this.accountCreatedTitle = '[data-qa="account-created"]';
         this.continueBtn = 'a[data-qa="continue-button"]';
@@ -39,6 +40,11 @@ class LoginPage {
         await this.page.fill(this.emailInput, email);
         await this.dismissConsentOverlay();
         await this.page.click(this.signupBtn);
+    }
+
+    async isSignupPageDisplayed() {
+        return (await this.isVisible(this.accountInformationTitle))
+            && (await this.isVisible(this.createAccountBtn));
     }
 
     async login(email, password) {
@@ -68,10 +74,18 @@ class LoginPage {
         await this.page.fill(this.mobileNumber, user.mobileNumber);
         await this.dismissConsentOverlay();
         await this.page.click(this.createAccountBtn);
+        await this.page.locator(this.accountCreatedTitle).waitFor({ state: 'visible', timeout: 20000 });
     }
 
-    async isAccountCreated() {
-        return this.isVisible(`${this.accountCreatedTitle}:has-text("Account Created!")`);
+    async getAccountCreatedText() {
+        const locator = this.page.locator(this.accountCreatedTitle);
+        await locator.waitFor({ state: 'visible', timeout: 20000 });
+
+        return (await locator.innerText()).trim();
+    }
+
+    async isAccountCreated(message = 'Account Created!') {
+        return await this.getAccountCreatedText() === message;
     }
 
     async continueAfterAccountCreated() {
@@ -83,6 +97,10 @@ class LoginPage {
 
     async isLoggedInAs(name) {
         return this.isVisible(`text=Logged in as ${name}`);
+    }
+
+    async isLogoutButtonVisible() {
+        return this.isVisible(this.logoutLink);
     }
 
     async logout() {

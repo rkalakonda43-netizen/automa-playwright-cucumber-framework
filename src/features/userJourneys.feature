@@ -7,7 +7,7 @@ Feature: Automation Exercise Critical User Journeys
     And user enters signup details
     Then signup page should be displayed
     When user completes account registration
-    Then User should see "Account Created!"
+    Then User should see "ACCOUNT CREATED!"
 
 
   Scenario: User Login Journey
@@ -20,8 +20,9 @@ Feature: Automation Exercise Critical User Journeys
     
   Scenario: Product Search Journey
     Given user launches the application
-    When user searches for a product
-    Then matching products should be displayed
+    When user searches for a product "Blue top"
+    Then matching products "Blue top" should be displayed
+    # And I wait for 50 seconds
 
 
 
@@ -38,6 +39,6 @@ Feature: Automation Exercise Critical User Journeys
     And user clicks on proceed to checkout button
     And User clicks on place order button
     And user fills in payment details
-    Then the order should be placed successfully
-    And wait for 50 seconds
+    Then the order should be placed successfully with message "Congratulations! Your order has been confirmed!"
+    # And wait for 50 seconds
   

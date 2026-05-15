@@ -273,7 +273,7 @@ npx playwright install
 
 ## Run Tests
 
-Default test run:
+Default headed test run:
 
 ```bash
 npm test
@@ -311,14 +311,40 @@ npm run test:checkout
 
 ## Screenshots On Failure
 
-The Cucumber `After` hook captures a full-page screenshot when a scenario fails:
+The Cucumber `After` hook captures a full-page screenshot when a scenario fails.
 
-```js
-const screenshot = await this.page.screenshot({ fullPage: true });
-await this.attach(screenshot, 'image/png');
+Failed screenshots are saved to:
+
+```text
+reports/screenshots/
 ```
 
-Screenshots are attached to the Cucumber scenario result. For easier viewing, add a Cucumber HTML or JSON report.
+Screenshots are also attached to the Cucumber report output.
+
+## Test Reports
+
+Each test run creates a report folder:
+
+```text
+reports/
+  cucumber-report.html
+  cucumber-report.json
+  screenshots/
+```
+
+Open the HTML report in a browser:
+
+```text
+reports/cucumber-report.html
+```
+
+The JSON report is useful for CI/CD pipelines and report integrations:
+
+```text
+reports/cucumber-report.json
+```
+
+The `reports/` folder is generated during test execution and is ignored by Git.
 
 ## Notes
 

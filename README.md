@@ -1,46 +1,83 @@
 # Automation Exercise Regression Framework
 
-Framework created using:
+Playwright + Cucumber regression framework for critical user journeys on Automation Exercise.
+
+## Tech Stack
+
 - JavaScript
 - Playwright
-- Cucumber (BDD)
-- Page Object Model (POM)
+- Cucumber BDD
+- Page Object Model
+- Node.js / npm
 
 ## Website Under Test
+
 https://automationexercise.com
 
-## Six Important User Journeys Identified
+## Automated Journeys
 
-1. User Registration
-2. User Login / Logout
-3. Product Search and Product Details
-4. Add Product to Cart and Checkout Flow
-5. Contact Us Form Submission
-6. Subscription Signup from Home/Footer
+The framework currently covers these regression journeys:
 
-## Four Automated Journeys Selected
+1. User registration
+2. User login
+3. Product search
+4. Add product to cart and complete checkout
 
-### 1. User Registration
-Critical because account creation is a primary entry point for new users.
+## Project Structure
 
-### 2. User Login
-Validates authentication and existing user access.
-
-### 3. Product Search
-Ensures users can find products quickly and efficiently.
-
-### 4. Add Product to Cart and Checkout Flow
-Core e-commerce workflow directly linked to conversions and revenue.
-The automated scenario continues through checkout and order confirmation because it gives stronger regression coverage of the buying path.
-
-## Framework Structure
-
-```
+```text
 src/
- ├── features/
- ├── pages/
- ├── steps/
- └── support/
+  features/
+    userJourneys.feature
+  pages/
+    BasePage.js
+    HomePage.js
+    LoginPage.js
+    ProductPage.js
+    CheckoutPage.js
+  steps/
+    userSteps.js
+  support/
+    cookieConsent.js
+    hooks.js
+scripts/
+  run-cucumber.js
+```
+
+## Page Object Model
+
+The project follows Page Object Model principles:
+
+- `BasePage.js` contains shared browser helpers such as click, fill, text retrieval, visibility checks, and cookie popup handling.
+- `HomePage.js` contains home page navigation actions.
+- `LoginPage.js` contains signup, registration, login, logout, and account verification actions.
+- `ProductPage.js` contains product search and cart product actions.
+- `CheckoutPage.js` contains checkout, payment, and order confirmation actions.
+- Step definitions call reusable page methods and do not store page locators.
+
+## Test Tags
+
+Scenarios are tagged in `src/features/userJourneys.feature`.
+
+Available tags:
+
+```text
+@smoke
+@regression
+@registration
+@login
+@products
+@checkout
+@e2e
+```
+
+Examples:
+
+```bash
+npm test -- --tags @login
+npm test -- --tags @products
+npm test -- --tags @checkout
+npm test -- --tags "@smoke or @checkout"
 ```
 
 ## Install Dependencies
@@ -57,7 +94,7 @@ npx playwright install
 
 ## Run Tests
 
-Headless run:
+Default test run:
 
 ```bash
 npm test
@@ -75,9 +112,38 @@ Debug run with Playwright Inspector and DevTools:
 npm run test:debug
 ```
 
-`test:headed` slows actions down and waits 3 seconds before closing the browser after each scenario, so the browser window is easier to see.
+Smoke tests:
+
+```bash
+npm run test:smoke
+```
+
+Regression tests:
+
+```bash
+npm run test:regression
+```
+
+Checkout tests:
+
+```bash
+npm run test:checkout
+```
+
+## Screenshots On Failure
+
+The Cucumber `After` hook captures a full-page screenshot when a scenario fails:
+
+```js
+const screenshot = await this.page.screenshot({ fullPage: true });
+await this.attach(screenshot, 'image/png');
+```
+
+Screenshots are attached to the Cucumber scenario result. For easier viewing, add a Cucumber HTML or JSON report.
 
 ## Notes
-- Uses reusable page objects.
-- Designed for easy scalability.
-- Supports CI/CD integration.
+
+- The project is currently JavaScript, not TypeScript.
+- Tests run in headed mode by default through `scripts/run-cucumber.js`.
+- `test:headed` slows actions down and waits briefly before closing the browser so execution is easier to observe.
+- Cookie and advertising overlays are handled in `src/support/cookieConsent.js`.

@@ -1,4 +1,4 @@
-const { Before, After, setDefaultTimeout } = require('@cucumber/cucumber');
+const { Before, After, Status, setDefaultTimeout } = require('@cucumber/cucumber');
 const { chromium } = require('playwright');
 const { dismissCookiePopup, installCookiePopupHandler } = require('./cookieConsent');
 
@@ -21,8 +21,13 @@ Before(async function () {
     this.dismissCookiePopup = async () => dismissCookiePopup(this.page);
 });
 
-After(async function () {
+After(async function (scenario) {
     const closeDelay = Number(process.env.BROWSER_CLOSE_DELAY || 0);
+
+    if (scenario.result?.status === Status.FAILED && this.page) {
+        const screenshot = await this.page.screenshot({ fullPage: true });
+        await this.attach(screenshot, 'image/png');
+    }
 
     if (this.page && closeDelay > 0) {
         await this.page.waitForTimeout(closeDelay);

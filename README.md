@@ -175,7 +175,9 @@ Out of the above six journeys, the following four flows were selected for automa
 - Proceed to checkout
 - Place order
 - Enter payment details
-- Verify order confirmation message# Automation Exercise Regression Framework
+- Verify order confirmation message
+
+# Automation Exercise Regression Framework
 
 Playwright + Cucumber regression framework for critical user journeys on Automation Exercise.
 
